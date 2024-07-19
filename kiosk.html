@@ -3,51 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kiosk Tabs</title>
+    <title>Kiosk Mode</title>
     <script>
-        // URLs to open in new tabs
-        const urls = [
-            "http://example.com",
-            "http://example2.com",
-            "http://example3.com"
-        ];
+        document.addEventListener("DOMContentLoaded", function() {
+            // URLs to open in new tabs
+            const urls = [
+                "http://example.com",
+                "http://example2.com",
+                "http://example3.com"
+            ];
 
-        // Open each URL in a new tab
-        function openTabs() {
-            urls.forEach(url => {
-                const tab = window.open(url, '_blank');
-                setTimeout(() => scrollTab(tab), 2000); // Scroll after 2 seconds
-            });
-        }
+            // Open each URL in a new tab and store the references
+            const tabs = urls.map(url => window.open(url, '_blank'));
 
-        // Scroll the content of a tab
-        function scrollTab(tab) {
-            tab.setTimeout(function scrollPage() {
-                tab.scrollBy(0, 1);
-                tab.setTimeout(scrollPage, 100); // Adjust the speed as needed
-            }, 1000); // Start scrolling after 1 second
-        }
-
-        // Switch between tabs every 5 seconds
-        function switchTabs() {
+            // Function to switch between tabs every 5 seconds
             let currentIndex = 0;
             setInterval(() => {
-                const tabs = urls.length;
-                if (tabs > 0) {
-                    window.focus();
-                    window.open(urls[currentIndex % tabs], '_blank');
+                if (tabs.length > 0) {
+                    tabs[currentIndex % tabs.length].focus();
                     currentIndex++;
                 }
             }, 5000); // Switch tabs every 5 seconds
-        }
-
-        // Open tabs and start switching between them
-        window.onload = () => {
-            openTabs();
-            setTimeout(switchTabs, 5000); // Start switching tabs after 5 seconds
-        };
+        });
     </script>
 </head>
 <body>
+    <!-- The body can remain empty as everything is handled via JavaScript -->
 </body>
 </html>
